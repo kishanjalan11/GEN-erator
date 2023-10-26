@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<link rel="stylesheet" href="./index.css">
+<body>
+    <div class="container">
+        <h2>Joke Generator</h2>
+        <form>
+            <select id="options" name="options">
+                <option value="joke">Joke</option>
+                <option value="shayari">Shayari</option>
+                <option value="quote">Quote</option>
+            </select>
+            <br>
+            <label for="textInput">Please Enter Topic:</label>
+            <input type="text" id="textInput" name="textInput">
+            <br>
+            <input type="submit" value="Submit" id="submit">
+            <textarea id="output" disabled></textarea>
+        </form>
+    </div>
+</body>
+<script src="./index.js"></script>
+</html>
