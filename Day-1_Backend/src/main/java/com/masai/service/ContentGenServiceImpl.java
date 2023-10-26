@@ -19,7 +19,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
-public class JokeServiceImpl implements JokeService{
+public class ContentGenServiceImpl implements ContentGenService{
 
 	@Value("${api.openai.secretkey}")
 	private String secretKey;
@@ -30,12 +30,12 @@ public class JokeServiceImpl implements JokeService{
 	ObjectMapper objectMapper;
 	HttpHeaders httpHeaders;
 	
-	public JokeServiceImpl() {
+	public ContentGenServiceImpl() {
 		super();
 	}
 
 	@Autowired
-	public JokeServiceImpl(RestTemplate restTemplate, ObjectMapper objectMapper, HttpHeaders httpHeaders) {
+	public ContentGenServiceImpl(RestTemplate restTemplate, ObjectMapper objectMapper, HttpHeaders httpHeaders) {
 		super();
 		this.restTemplate = restTemplate;
 		this.objectMapper = objectMapper;
@@ -43,7 +43,7 @@ public class JokeServiceImpl implements JokeService{
 	}
 
 
-	public String generateJoke(String topic) throws JsonProcessingException{
+	public String generate(String type,String topic) throws JsonProcessingException{
 
 		httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 		httpHeaders.set("Authorization", "Bearer " + secretKey);
@@ -54,13 +54,24 @@ public class JokeServiceImpl implements JokeService{
 		
 		Map<String, String> systemRole = new HashMap<>();
 		systemRole.put("role", "system");
-		systemRole.put("content", "You are a Joke Creater who generates creative and very funny jokes");
+		if(type.equals("joke")){
+			systemRole.put("content", "Act as a Joke Creater who generates creative and very funny joke through and around the give word or sentence. Give back only 1 funny and hilarious joke around the given topic");
+		}
+		else if(type.equals("shayari")){
+			systemRole.put("content", "Act as a Shayar who generates creative, poetic and soothing shayaris in hindi through and around the give word or sentence. Give back only 1 unique and complete shayari around the given topic" );
+		}
+		else if(type.equals("quote")){
+			systemRole.put("content", "Act as a expert quote teller who generates thoughtful and refreshing quote through and around the give word or sentence. Give back only 1 unique and mesmerizing quote around the given topic" );
+		}
+		else{
+			systemRole.put("content", "Act as a expert story teller who generates thoughtful and amazing story through and around the give word or sentence. Give back only 1 short,unique and mesmerizing story around the given topic in about 150 words" );
+		}
 		
 		List<Map<String, String>> roles = new ArrayList<>();
 		roles.add(systemRole);
 		roles.add(userRole);
 		
-		Body body = new Body("gpt-3.5-turbo", roles, 100, 1.0, 0.9, 1.0, 1.0);
+		Body body = new Body("gpt-3.5-turbo", roles, 4000, 1.0, 0.9, 1.0, 1.0);
 		
 		HttpEntity<String> requestEntity = new HttpEntity<>(objectMapper.writeValueAsString(body), httpHeaders);
 		ResponseEntity<String> responseEntity = restTemplate.postForEntity(url, requestEntity, String.class);

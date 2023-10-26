@@ -9,17 +9,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.masai.service.JokeService;
+import com.masai.service.ContentGenService;
 
 @RestController
 @CrossOrigin(origins = "*")
-public class JokeController {
+public class ContentGenController {
 
 	@Autowired
-	JokeService jokeService;
+	ContentGenService genService;
 	
-	@PostMapping("/joke/{topic}")
-	ResponseEntity<String> generateJoke(@PathVariable String topic) throws JsonProcessingException{
-		return new ResponseEntity<String>(jokeService.generateJoke(topic), HttpStatus.OK);
+	@PostMapping("/{type}/{topic}")
+	ResponseEntity<String> generate(@PathVariable String type, @PathVariable String topic) throws JsonProcessingException{
+		return new ResponseEntity<String>(genService.generate(type,topic), HttpStatus.OK);
 	}
 }

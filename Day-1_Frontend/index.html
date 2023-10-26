@@ -3,24 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>GEN-erator</title>
+    <link rel="stylesheet" href="./index.css">
+    <link rel="icon" href="./Icon.png">    
 </head>
-<link rel="stylesheet" href="./index.css">
 <body>
     <div class="container">
-        <h2>Joke Generator</h2>
+        <img src="./GEN-erator.png" alt="Logo" class="logo">
         <form>
             <select id="options" name="options">
                 <option value="joke">Joke</option>
                 <option value="shayari">Shayari</option>
                 <option value="quote">Quote</option>
+                <option value="story">Story</option>
             </select>
             <br>
             <label for="textInput">Please Enter Topic:</label>
             <input type="text" id="textInput" name="textInput">
             <br>
             <input type="submit" value="Submit" id="submit">
-            <textarea id="output" disabled></textarea>
+            <!-- -=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->
+            <div id="loadingAnimation" style="display: none;">
+                <!-- You can customize your loading animation here -->
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+            <!-- -=-=-=-=-=-=-=--==-=-=-=-=-=-=-=-=-=-=-=-=-=- -->
+            <label id="output"></label>
         </form>
     </div>
 </body>
